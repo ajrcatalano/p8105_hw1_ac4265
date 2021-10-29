@@ -13,3 +13,43 @@ Creating a data frame comprised of:
 * a logical vector indicating whether elements of the sample are greater than 0
 * a character vector of length 10
 * a factor vector of length 10, with 3 different factor “levels”
+
+```{r}
+# loading tidyverse
+library(tidyverse)
+
+# creating the data frame from above using tibble
+df_1 = tibble(
+  num_vec = rnorm(10),
+  logic_vec = num_vec > 0,
+  char_vec = c("Techno", "is", "superior", "to", "all", "other",
+                "forms", "of", "electronic", "music"),
+  factor_vec = factor(c("Acid", "Dub", "Dub", "Minimal", "Acid",
+                         "Acid", "Minimal", "Dub", "Acid", "Minimal"))
+)
+
+df_1
+```
+df_1 is cool. If you cannot tell, I enjoy techno, which happens to be one of New York's only
+redeeming offerings.
+
+```{r, eval = FALSE}
+mean(num_vec, logic_vec, char_vec, factor_vec)
+```
+When I try to take the mean of each variable using the above code, I am told that the first variable, num_vec, does not exist/is not found. I will try using the **pull** function.
+
+```{r, collapse = TRUE}
+# using the pull function to extract variables from df_1 and find their means
+mean(df_1 %>% pull(num_vec))
+mean(df_1 %>% pull(logic_vec))
+mean(df_1 %>% pull(char_vec))
+mean(df_1 %>% pull (factor_vec))
+```
+Using the above code, R returned numeric values for num_vec (`r mean(df_1 %>% pull(num_vec))`) and logic_vec (`r mean(df_1 %>% pull(logic_vec))`), but returned NA for char_vec and factor_vec.
+
+```{r, eval = FALSE}
+as.numeric(df_1 %>% pull(logic_vec))
+as.numeric(df_1 %>% pull(char_vec))
+as.numeric(df_1 %>% pull(factor_vec))
+```
+The **as.numeric** function returns integers for logic_vec and factor_vec, which means that R treats these vectors as numeric. However, the function returns NA for char_vec, showing that R does not treat character vectors as numeric.
