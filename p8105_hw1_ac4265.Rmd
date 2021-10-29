@@ -14,10 +14,12 @@ Creating a data frame comprised of:
 * a character vector of length 10
 * a factor vector of length 10, with 3 different factor “levels”
 
-```{r}
+```{r, echo = FALSE, results = 'hide'}
 # loading tidyverse
 library(tidyverse)
+```
 
+```{r}
 # creating the data frame from above using tibble
 df_1 = tibble(
   num_vec = rnorm(10),
@@ -28,6 +30,7 @@ df_1 = tibble(
                          "Acid", "Minimal", "Dub", "Acid", "Minimal"))
 )
 
+# displaying df_1
 df_1
 ```
 df_1 is cool. If you cannot tell, I enjoy techno, which happens to be one of New York's only
@@ -53,3 +56,23 @@ as.numeric(df_1 %>% pull(char_vec))
 as.numeric(df_1 %>% pull(factor_vec))
 ```
 The **as.numeric** function returns integers for logic_vec and factor_vec, which means that R treats these vectors as numeric. However, the function returns NA for char_vec, showing that R does not treat character vectors as numeric.
+
+# Problem 2
+
+```{r, echo = FALSE, results = 'hide'}
+# loading penguin data downloaded from install.packages("palmerpenguins")
+data("penguins", package = "palmerpenguins" )
+```
+The penguins data contains information about penguin species, location, bill length (mm) and depth (mm), flipper length (mm), mass (g), sex, and year documented. The dataset contains `r nrow(penguins)` observations and `r ncol(penguins)` variables. As penguin flipper length is of perpetual concern, we should note the mean penguin flipper length: `r mean(penguins %>% pull(flipper_length_mm))`.
+
+```{r, echo = FALSE, warning = FALSE}
+# making a scatterplot of flipper length vs. bill length
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+      geom_point() +
+      labs(x = "Bill Length (mm)", y = "Flipper Length (mm)", title = 
+             "Flipper Length vs. Bill Length") +
+      theme_minimal()
+
+# saving the plot
+ggsave("penguin_scatterplot.pdf", height = 4, width = 6)
+```
