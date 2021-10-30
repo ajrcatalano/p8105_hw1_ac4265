@@ -43,17 +43,17 @@ When I try to take the mean of each variable using the above code, I am told tha
 
 ```{r, collapse = TRUE}
 # using the pull function to extract variables from df_1 and find their means
-mean(df_1 %>% pull(num_vec))
-mean(df_1 %>% pull(logic_vec))
-mean(df_1 %>% pull(char_vec))
-mean(df_1 %>% pull (factor_vec))
+mean(pull(df_1, num_vec))
+mean(pull(df_1, logic_vec))
+mean(pull(df_1, char_vec))
+mean(pull (df_1, factor_vec))
 ```
-Using the above code, R returned numeric values for num_vec (`r mean(df_1 %>% pull(num_vec))`) and logic_vec (`r mean(df_1 %>% pull(logic_vec))`), but returned NA for char_vec and factor_vec.
+Using the above code, R returned numeric values for num_vec (`r mean(pull(df_1, num_vec))`) and logic_vec (`r mean(pull(df_1, logic_vec))`), but returned NA for char_vec and factor_vec.
 
 ```{r, eval = FALSE}
-as.numeric(df_1 %>% pull(logic_vec))
-as.numeric(df_1 %>% pull(char_vec))
-as.numeric(df_1 %>% pull(factor_vec))
+as.numeric(pull(df_1, logic_vec))
+as.numeric(pull(df_1, char_vec))
+as.numeric(pull(df_1, factor_vec))
 ```
 The **as.numeric** function returns integers for logic_vec and factor_vec, which means that R treats these vectors as numeric. However, the function returns NA for char_vec, showing that R does not treat character vectors as numeric.
 
@@ -63,7 +63,7 @@ The **as.numeric** function returns integers for logic_vec and factor_vec, which
 # loading penguin data downloaded from install.packages("palmerpenguins")
 data("penguins", package = "palmerpenguins" )
 ```
-The penguins data contains information about penguin species, location, bill length (mm) and depth (mm), flipper length (mm), mass (g), sex, and year documented. The dataset contains `r nrow(penguins)` observations and `r ncol(penguins)` variables. As penguin flipper length is of perpetual concern, we should note the mean penguin flipper length: `r mean(penguins %>% pull(flipper_length_mm))`.
+The penguins data contains information about penguin species, location, bill length (mm) and depth (mm), flipper length (mm), mass (g), sex, and year documented. The dataset contains `r nrow(penguins)` observations and `r ncol(penguins)` variables. As penguin flipper length is of perpetual concern, we should note the mean penguin flipper length: `r round(mean(pull(penguins, flipper_length_mm), na.rm = TRUE))`.
 
 ```{r, echo = FALSE, warning = FALSE}
 # making a scatterplot of flipper length vs. bill length
